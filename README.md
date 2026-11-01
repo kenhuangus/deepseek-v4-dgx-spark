@@ -116,9 +116,13 @@ python3 scripts/test-deepseek.py --base-url http://localhost:8888/v1
 
 To use DeepSeek-V4.1-Flash as the primary coding and reasoning engine in the Pi agent harness:
 
-1. Copy `clients/pi/models.json` to `~/.pi/agent/models.json`.
-2. Copy `clients/pi/settings.json` to `~/.pi/agent/settings.json`.
-3. Launch the agent:
+1. Copy `clients/pi/models.json` to `~/.pi/agent/models.json` (configures 131,072 context window and 8,192 max tokens).
+2. Copy `clients/pi/settings.json` to `~/.pi/agent/settings.json` (enables 70% context auto-compaction with `reserveTokens: 39322` and `keepRecentTokens: 20000`).
+3. For multi-turn iterative coding loops, relax watchdog extension thresholds by 10x to accommodate deep test-driven refactoring without premature loop detection:
+   - Same-target file mutation limit: 50 consecutive writes/edits per file.
+   - Same-result identical output limit: 80 consecutive matching tool output hashes.
+   - Error recovery ceiling: 250 recoveries per run.
+4. Launch the agent:
    ```bash
    pi --provider dgx-spark-llm --model deepseek-v4.1-flash
    ```
@@ -154,6 +158,21 @@ Passed Guard Checks:   3
 Robustness Score:      60.0%
 Report saved to:       red-teaming/redteam_report.json
 ```
+
+---
+
+## 7. Autonomous Engineering Case Study: redteam-agent
+
+To validate end-to-end autonomous programming on DGX Spark, the Pi agent was deployed with DeepSeek-V4.1-Flash to synthesize an enterprise red-teaming harness from scratch. Operating through a recursive self-improvement loop with the 128K context window and relaxed loop guards, the model authored the complete [redteam-agent](https://github.com/kenhuangus/redteam-agent) repository:
+
+* **Repository**: [https://github.com/kenhuangus/redteam-agent](https://github.com/kenhuangus/redteam-agent)
+* **Automated Test Suite**: 79 unit tests covering all components, executing in 0.50 seconds (`python -m pytest tests -q`).
+* **Key Capabilities**:
+  - Deterministic authorization gate requiring approved tickets and allowed target hosts before live scans execute.
+  - 14 declarative attacks covering OWASP Top 10 for LLM Applications 2025 (LLM01–LLM10) and OWASP Top 10 for Agentic AI 2026 (ASI01–ASI10).
+  - Multi-family evasion mutations (Base64 wrapping, ROT13, delimiter injection, urgency framing).
+  - Tri-layer evaluation engine with automated exploit reproduction confirmation.
+  - Structured JSON (`redteam-agent/report/v1`) and publication-grade Markdown reporting.
 
 ---
 
