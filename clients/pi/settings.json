@@ -1,0 +1,25 @@
+{
+  "$schema": "https://pi.dev/schemas/settings.schema.json",
+  "defaultProvider": "dgx-spark-llm",
+  "defaultModel": "deepseek-v4.1-flash",
+  "defaultThinkingLevel": "high",
+  "modelThinkingLevels": {
+    "dgx-spark-llm/deepseek-v4.1-flash": "high",
+    "dgx-spark-llm/deepseek": "high"
+  },
+  "hideThinkingBlock": false,
+  "steeringMode": "all",
+  "followUpMode": "one-at-a-time",
+  "enabledModels": [
+    "dgx-spark-llm/deepseek-v4.1-flash",
+    "dgx-spark-llm/deepseek"
+  ],
+  "thinkingBudgets": {
+    "minimal": 512,
+    "low": 1536,
+    "medium": 3072,
+    "high": 8192,
+    "xhigh": 16384,
+    "max": 32768
+  }
+}

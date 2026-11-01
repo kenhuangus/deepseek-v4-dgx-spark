@@ -1,0 +1,63 @@
+{
+  "$schema": "https://pi.dev/schemas/models.schema.json",
+  "providers": {
+    "dgx-spark-llm": {
+      "baseUrl": "http://localhost:8888/v1",
+      "apiKey": "local",
+      "api": "openai-completions",
+      "compat": {
+        "supportsStore": false,
+        "supportsDeveloperRole": false,
+        "supportsReasoningEffort": false,
+        "maxTokensField": "max_tokens",
+        "requiresReasoningContentOnAssistantMessages": false,
+        "thinkingFormat": "qwen-chat-template",
+        "thinkingTokenBudgetField": "thinking_budget_tokens"
+      },
+      "models": [
+        {
+          "id": "deepseek-v4.1-flash",
+          "name": "DeepSeek-V4.1-Flash-1017 (dgx-spark-llm GB10)",
+          "api": "openai-completions",
+          "reasoning": true,
+          "input": ["text"],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 16384,
+          "maxTokens": 8192,
+          "samplingParams": {
+            "temperature": 1.0,
+            "top_p": 1.0,
+            "top_k": 0,
+            "min_p": 0
+          }
+        },
+        {
+          "id": "deepseek",
+          "name": "DeepSeek (dgx-spark-llm Alias)",
+          "api": "openai-completions",
+          "reasoning": true,
+          "input": ["text"],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 16384,
+          "maxTokens": 8192,
+          "samplingParams": {
+            "temperature": 1.0,
+            "top_p": 1.0,
+            "top_k": 0,
+            "min_p": 0
+          }
+        }
+      ]
+    }
+  }
+}
