@@ -137,7 +137,7 @@ Serving the model requires passing explicit flags to the server binary to enforc
   --chat-template-kwargs '{"reasoning_effort":75}'
 ```
 
-The load-mode and lazy-mode flags instruct the operating system to map the model file into virtual memory without reading unreferenced pages into RAM. The override-tensor flag pins token embedding weights to system memory, avoiding allocation conflicts on the GPU. Passing q8_0 quantization flags for key and value caches compresses context memory, allowing a 16,384 token window within available unified memory headroom.
+The load-mode and lazy-mode flags instruct the operating system to map the model file into virtual memory without reading unreferenced pages into RAM. The override-tensor flag pins token embedding weights to system memory, avoiding allocation conflicts on the GPU. Passing q8_0 quantization flags for key and value caches compresses context memory, allowing a 32,768 token window within available unified memory headroom.
 
 The server status script verifies process execution, memory utilization, and local endpoint responsiveness.
 
@@ -182,7 +182,7 @@ Empirical telemetry recorded on the DGX Spark host confirms the operational perf
 - Prompt Prefill Speed: 35.67 tokens per second.
 - Resident GPU Allocation: 116.8 GB within Blackwell unified memory.
 - Engram NVMe Page Latency: 1.2 to 2.8 milliseconds per retrieval step.
-- Active Context Capacity: 16,384 tokens with 8-bit quantized key-value caches.
+- Active Context Capacity: 32,768 tokens with 8-bit quantized key-value caches.
 
 Testing the endpoint remotely across a secure Tailscale virtual private network connection confirms identical decoding throughput of 18.10 tokens per second, verifying that external client harnesses interact with the model without performance degradation.
 
@@ -202,8 +202,8 @@ The configuration entry in ~/.pi/agent/models.json defines endpoint routing and 
         {
           "id": "deepseek-v4.1-flash",
           "name": "DeepSeek V4.1 Flash (1-Bit DGX Spark)",
-          "contextWindow": 16384,
-          "maxTokens": 4096
+          "contextWindow": 32768,
+          "maxTokens": 8192
         }
       ]
     }
@@ -211,7 +211,7 @@ The configuration entry in ~/.pi/agent/models.json defines endpoint routing and 
 }
 ```
 
-The configuration defines the endpoint address, sets the context boundary to 16,384 tokens, and designates the local server as the default provider for coding workflows.
+The configuration defines the endpoint address, sets the context boundary to 32,768 tokens, and designates the local server as the default provider for coding workflows.
 
 Connecting Pi agent to the local endpoint enables local autonomous development loops. Developers execute coding sessions directly against the model:
 
