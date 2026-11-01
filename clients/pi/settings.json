@@ -12,7 +12,7 @@
   "followUpMode": "one-at-a-time",
   "compaction": {
     "enabled": true,
-    "reserveTokens": 20000,
+    "reserveTokens": 19661,
     "keepRecentTokens": 10000
   },
   "enabledModels": [
