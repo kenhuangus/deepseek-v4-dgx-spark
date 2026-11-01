@@ -41,7 +41,7 @@ Measured against `http://localhost:8888/v1/chat/completions` using the Blackwell
 | **Prompt Processing (Prefill) Speed** | **35.67 tokens/sec** | GPU Tensor Core FP16/INT4 matrix multiply |
 | **GPU Memory Allocation** | **116.8 GB** | MoE backbone weight residency in GB10 UMA |
 | **Engram Table Access Latency** | **1.2 – 2.8 ms / step** | PCIe Gen 4/5 random 4K read from NVMe SSD |
-| **Context Window Size** | **65,536 tokens** | Quantized 8-bit KV Cache (`ctk q8_0`, `ctv q8_0`) |
+| **Context Window Size** | **131,072 tokens (128K)** | Quantized 4-bit KV Cache (`ctk q4_0`, `ctv q4_0`) |
 
 ---
 

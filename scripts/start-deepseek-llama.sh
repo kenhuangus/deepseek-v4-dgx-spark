@@ -8,7 +8,7 @@ SRC_BIN="${LLAMA_SRC_BIN:-$HOME/llama-deepseek41-bin/bin}"
 PORT="${LLM_PORT:-8888}"
 LOG="${DEEPSEEK_LOG:-$HOME/deepseek-v4/llama-deepseek.log}"
 PIDF="${DEEPSEEK_PIDF:-$HOME/deepseek-v4/llama-deepseek.pid}"
-CTX="${DEEPSEEK_CTX:-65536}"
+CTX="${DEEPSEEK_CTX:-131072}"
 
 # 1. Prepare runtime environment if needed
 if [[ ! -x "$RUN_BIN/llama-server" ]]; then
@@ -56,8 +56,8 @@ nohup "$RUN_BIN/llama-server" \
   -c "$CTX" \
   -np 1 \
   -fa on \
-  -ctk q8_0 \
-  -ctv q8_0 \
+  -ctk q4_0 \
+  -ctv q4_0 \
   --jinja \
   --temp 1.0 \
   --top-p 1.0 \
@@ -73,7 +73,7 @@ echo "DeepSeek llama-server started with PID $(cat "$PIDF") on dgx-spark-llm"
 
 # 4. Wait for readiness
 echo "Waiting for readiness on http://localhost:${PORT}/v1/models ..."
-for i in $(seq 1 180); do
+for i in $(seq 1 240); do
   if curl -fsS -m 2 "http://localhost:${PORT}/v1/models" >/dev/null 2>&1; then
     echo "SUCCESS: DeepSeek is READY on dgx-spark-llm!"
     curl -fsS -m 5 "http://localhost:${PORT}/v1/models"
