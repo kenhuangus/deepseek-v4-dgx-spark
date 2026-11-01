@@ -10,6 +10,11 @@
   "hideThinkingBlock": false,
   "steeringMode": "all",
   "followUpMode": "one-at-a-time",
+  "compaction": {
+    "enabled": true,
+    "reserveTokens": 20000,
+    "keepRecentTokens": 10000
+  },
   "enabledModels": [
     "dgx-spark-llm/deepseek-v4.1-flash",
     "dgx-spark-llm/deepseek"
