@@ -41,7 +41,7 @@ Measured against `http://localhost:8888/v1/chat/completions` using the Blackwell
 | **Prompt Processing (Prefill) Speed** | **35.67 tokens/sec** | GPU Tensor Core FP16/INT4 matrix multiply |
 | **GPU Memory Allocation** | **116.8 GB** | MoE backbone weight residency in GB10 UMA |
 | **Engram Table Access Latency** | **1.2 – 2.8 ms / step** | PCIe Gen 4/5 random 4K read from NVMe SSD |
-| **Context Window Size** | **131,072 tokens (128K)** | Quantized 4-bit KV Cache (`ctk q4_0`, `ctv q4_0`) |
+| **Context Window Size** | **262,144 tokens (256K)** | Quantized 4-bit KV Cache (`ctk q4_0`, `ctv q4_0`), ~3.16 GiB |
 
 ---
 
@@ -53,6 +53,7 @@ Measured against `http://localhost:8888/v1/chat/completions` using the Blackwell
 │   ├── build-llama-deepseek.sh     # Compiles llama.cpp PR #30817 inside CUDA 13 devel container
 │   ├── prepare-llama-run-env.sh   # Sets up dynamic linking (libnccl.so.2, SONAME links)
 │   ├── download-deepseek.sh       # Resumable 5-shard downloader for UD-IQ1_S from Hugging Face
+│   ├── free-ram-services.sh       # Reclaims UMA RAM by disabling GUI and non-essential daemons
 │   ├── start-deepseek-llama.sh    # Production launcher with SSD offloading & model aliases
 │   ├── stop-deepseek.sh           # Clean shutdown and resource recovery
 │   ├── status-deepseek.sh         # Memory, GPU, and endpoint probe
@@ -116,8 +117,8 @@ python3 scripts/test-deepseek.py --base-url http://localhost:8888/v1
 
 To use DeepSeek-V4.1-Flash as the primary coding and reasoning engine in the Pi agent harness:
 
-1. Copy `clients/pi/models.json` to `~/.pi/agent/models.json` (configures 131,072 context window and 8,192 max tokens).
-2. Copy `clients/pi/settings.json` to `~/.pi/agent/settings.json` (enables 70% context auto-compaction with `reserveTokens: 39322` and `keepRecentTokens: 20000`).
+1. Copy `clients/pi/models.json` to `~/.pi/agent/models.json` (configures 262,144 context window and 32,768 max tokens per turn).
+2. Copy `clients/pi/settings.json` to `~/.pi/agent/settings.json` (enables 70% context auto-compaction with `reserveTokens: 78644` and `keepRecentTokens: 40000`).
 3. For multi-turn iterative coding loops, relax watchdog extension thresholds by 10x to accommodate deep test-driven refactoring without premature loop detection:
    - Same-target file mutation limit: 50 consecutive writes/edits per file.
    - Same-result identical output limit: 80 consecutive matching tool output hashes.

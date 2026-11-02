@@ -27,8 +27,8 @@
             "cacheRead": 0,
             "cacheWrite": 0
           },
-          "contextWindow": 131072,
-          "maxTokens": 8192,
+          "contextWindow": 262144,
+          "maxTokens": 32768,
           "samplingParams": {
             "temperature": 1.0,
             "top_p": 1.0,
@@ -48,8 +48,8 @@
             "cacheRead": 0,
             "cacheWrite": 0
           },
-          "contextWindow": 131072,
-          "maxTokens": 8192,
+          "contextWindow": 262144,
+          "maxTokens": 32768,
           "samplingParams": {
             "temperature": 1.0,
             "top_p": 1.0,

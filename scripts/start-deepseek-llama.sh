@@ -8,7 +8,7 @@ SRC_BIN="${LLAMA_SRC_BIN:-$HOME/llama-deepseek41-bin/bin}"
 PORT="${LLM_PORT:-8888}"
 LOG="${DEEPSEEK_LOG:-$HOME/deepseek-v4/llama-deepseek.log}"
 PIDF="${DEEPSEEK_PIDF:-$HOME/deepseek-v4/llama-deepseek.pid}"
-CTX="${DEEPSEEK_CTX:-131072}"
+CTX="${DEEPSEEK_CTX:-262144}"
 
 # 1. Prepare runtime environment if needed
 if [[ ! -x "$RUN_BIN/llama-server" ]]; then
@@ -58,6 +58,7 @@ nohup "$RUN_BIN/llama-server" \
   -fa on \
   -ctk q4_0 \
   -ctv q4_0 \
+  --cache-reuse 256 \
   --jinja \
   --temp 1.0 \
   --top-p 1.0 \

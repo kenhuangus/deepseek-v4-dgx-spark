@@ -12,8 +12,8 @@
   "followUpMode": "one-at-a-time",
   "compaction": {
     "enabled": true,
-    "reserveTokens": 39322,
-    "keepRecentTokens": 20000
+    "reserveTokens": 78644,
+    "keepRecentTokens": 40000
   },
   "enabledModels": [
     "dgx-spark-llm/deepseek-v4.1-flash",
