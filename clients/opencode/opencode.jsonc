@@ -1,0 +1,38 @@
+{
+  "$schema": "https://opencode.ai/config.schema.json",
+  "default_agent": "build",
+  "model": "spark/deepseek-v4.1-flash",
+  "provider": {
+    "spark": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "DGX Spark (DeepSeek-V4.1-Flash)",
+      "options": {
+        "baseURL": "http://localhost:8888/v1",
+        "apiKey": "local"
+      },
+      "models": {
+        "deepseek-v4.1-flash": {
+          "name": "DeepSeek V4.1 Flash 1-Bit (DGX Spark GB10)",
+          "limit": {
+            "context": 262144,
+            "output": 32768
+          },
+          "reasoning": true
+        },
+        "deepseek": {
+          "name": "DeepSeek (Spark Alias)",
+          "limit": {
+            "context": 262144,
+            "output": 32768
+          },
+          "reasoning": true
+        }
+      }
+    }
+  },
+  "agent": {
+    "build": {
+      "model": "spark/deepseek-v4.1-flash"
+    }
+  }
+}
